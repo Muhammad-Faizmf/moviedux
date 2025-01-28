@@ -9,14 +9,29 @@ import AllRoutes from "./components/Routers";
 function App() {
   const [movies, setMovies] = useState([]);
   const [watchlist, setWatchlist] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(
       "https://api.themoviedb.org/3/movie/popular?api_key=dc572f65942de3ed506949ef2f472418"
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch movies");
+        }
+        return response.json();
+      })
       .then((data) => {
         setMovies(data.results);
+        setError("");
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        setError(e.message);
       });
   }, []);
 
@@ -36,6 +51,8 @@ function App() {
           movies={movies}
           watchlist={watchlist}
           toggleWatchlist={toggleWatchlist}
+          loading={loading}
+          error={error}
         />
       </div>
       <Footer></Footer>

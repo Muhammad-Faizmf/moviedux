@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MovieCard from "./MovieCard";
-const MoviesGrid = ({ movies, watchlist, toggleWatchlist, setMovies}) => {
+import Loader from "./Loader"
+const MoviesGrid = ({ movies, watchlist, toggleWatchlist, loading, error}) => {
   const [searchTerm, setSearch] = useState("");
   const [rating, setRating] = useState("All");
   const handleSearchChange = (e) => {
@@ -46,7 +47,8 @@ const MoviesGrid = ({ movies, watchlist, toggleWatchlist, setMovies}) => {
     && matchSearchTerm(movie)
   );
 
-
+  if(loading) return <Loader/>
+  if(error) return <h2>{error}</h2>
   return (
     <div>
       <input

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import MoviesGrid from "../components/MoviesGrid";
 import Watchlist from "../components/Watchlist";
 
-const AllRoutes = ({movies, watchlist, toggleWatchlist}) => {
+const AllRoutes = ({movies, watchlist, toggleWatchlist, loading,error}) => {
   return (
     <Router>
       <nav>
@@ -18,11 +18,14 @@ const AllRoutes = ({movies, watchlist, toggleWatchlist}) => {
       <Routes>
         <Route
           path="/"
-          element={
+          element= {
             <MoviesGrid
               movies={movies}
               watchlist={watchlist}
               toggleWatchlist={toggleWatchlist}
+              loading={loading}
+              error={error}
+           
             />
           }
         ></Route>
@@ -33,6 +36,8 @@ const AllRoutes = ({movies, watchlist, toggleWatchlist}) => {
               movies={movies}
               watchlist={watchlist}
               toggleWatchlist={toggleWatchlist}
+              loading={loading}
+              error={error}
             />
           }
         ></Route>
